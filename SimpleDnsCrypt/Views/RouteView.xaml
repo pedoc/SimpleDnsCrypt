@@ -7,7 +7,8 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:dd="urn:gong-wpf-dragdrop"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:cal="http://www.caliburnproject.org" 
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d"
              Height="Auto" Width="650"
              lex:LocalizeDictionary.DesignCulture="en"
@@ -118,13 +119,13 @@
                                                 HorizontalContentAlignment="Center"
                                                 VerticalContentAlignment="Center" >
                                             </iconPacks:PackIconMaterial>
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="Click">
-                                                    <cal:ActionMessage MethodName="Remove">
+                                            <b:Interaction.Triggers>
+                                                <b:EventTrigger EventName="Click">
+                                                    <cal:ActionMessage MethodName="HandleManageRoutes">
                                                         <cal:Parameter Value="{Binding}" />
                                                     </cal:ActionMessage>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
+                                                </b:EventTrigger>
+                                            </b:Interaction.Triggers>
                                         </Button>
                                     </Grid>
                                 </Border>

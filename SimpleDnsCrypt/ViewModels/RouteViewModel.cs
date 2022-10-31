@@ -50,6 +50,11 @@ namespace SimpleDnsCrypt.ViewModels
 			}
 		}
 
+		public void DragEnter(IDropInfo dropInfo)
+		{
+
+		}
+
 		void IDropTarget.DragOver(IDropInfo dropInfo)
 		{
 			if (dropInfo.Data is StampFileEntry && dropInfo.TargetItem is StampFileEntry || dropInfo.TargetItem is null)
@@ -57,6 +62,11 @@ namespace SimpleDnsCrypt.ViewModels
 				dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
 				dropInfo.Effects = DragDropEffects.Move;
 			}
+		}
+
+		public void DragLeave(IDropInfo dropInfo)
+		{
+
 		}
 
 		void IDropTarget.Drop(IDropInfo dropInfo)

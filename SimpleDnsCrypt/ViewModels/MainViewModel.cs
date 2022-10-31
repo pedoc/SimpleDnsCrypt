@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using TabControl = System.Windows.Controls.TabControl;
+// ReSharper disable AsyncApostle.AsyncWait
 
 namespace SimpleDnsCrypt.ViewModels
 {
@@ -672,8 +673,8 @@ namespace SimpleDnsCrypt.ViewModels
 		{
 			dynamic settings = new ExpandoObject();
 			settings.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-			var result = _windowManager.ShowDialogAsync(SettingsViewModel, null, settings);
-			if (!result) Properties.Settings.Default.Save();
+			var result = (Task<bool?>)_windowManager.ShowDialogAsync(SettingsViewModel, null, settings);
+			if (result.Result!=null&&!result.Result.Value) Properties.Settings.Default.Save();
 		}
 
 		public void Proxies()
@@ -683,8 +684,8 @@ namespace SimpleDnsCrypt.ViewModels
 			ProxiesViewModel.WindowTitle = LocalizationEx.GetUiString("proxy_manage_proxies", Thread.CurrentThread.CurrentCulture);
 			ProxiesViewModel.HttpProxyInput = string.IsNullOrEmpty(DnscryptProxyConfiguration.http_proxy) ? "" : DnscryptProxyConfiguration.http_proxy;
 			ProxiesViewModel.SocksProxyInput = string.IsNullOrEmpty(DnscryptProxyConfiguration.proxy) ? "" : DnscryptProxyConfiguration.proxy;
-			var result = _windowManager.ShowDialogAsync(ProxiesViewModel, null, settings);
-			if (result) return;
+			var result = (Task<bool?>)_windowManager.ShowDialogAsync(ProxiesViewModel, null, settings);
+			if (result.Result != null && result.Result.Value) return;
 			var saveAdvancedSettings = false;
 
 			if (string.IsNullOrEmpty(ProxiesViewModel.HttpProxyInput))
@@ -728,8 +729,8 @@ namespace SimpleDnsCrypt.ViewModels
 			var oldAddressed = new List<string>(DnscryptProxyConfiguration.listen_addresses);
 			FallbackResolversViewModel.FallbackResolvers = DnscryptProxyConfiguration.fallback_resolvers;
 			FallbackResolversViewModel.WindowTitle = LocalizationEx.GetUiString("advanced_settings_fallback_resolvers", Thread.CurrentThread.CurrentCulture);
-			var result = _windowManager.ShowDialogAsync(FallbackResolversViewModel, null, settings);
-			if (!result)
+			var result = (Task<bool?>)_windowManager.ShowDialogAsync(FallbackResolversViewModel, null, settings);
+			if (result.Result!=null&&!result.Result.Value)
 			{
 				if (FallbackResolversViewModel.FallbackResolvers.Count == 0) return;
 
@@ -748,8 +749,8 @@ namespace SimpleDnsCrypt.ViewModels
 			var oldAddressed = new List<string>(DnscryptProxyConfiguration.listen_addresses);
 			ListenAddressesViewModel.ListenAddresses = DnscryptProxyConfiguration.listen_addresses;
 			ListenAddressesViewModel.WindowTitle = LocalizationEx.GetUiString("address_settings_listen_addresses", Thread.CurrentThread.CurrentCulture);
-			var result = _windowManager.ShowDialogAsync(ListenAddressesViewModel, null, settings);
-			if (!result)
+			var result = (Task<bool?>)_windowManager.ShowDialogAsync(ListenAddressesViewModel, null, settings);
+			if (result.Result!=null&&!result.Result.Value)
 			{
 				if (ListenAddressesViewModel.ListenAddresses.Count == 0) return;
 
@@ -1063,8 +1064,8 @@ namespace SimpleDnsCrypt.ViewModels
 				}
 				RouteViewModel.Relays = _relays;
 				RouteViewModel.Resolver = availableResolver.DisplayName;
-				var result = _windowManager.ShowDialogAsync(RouteViewModel, null, settings);
-				if (result) return;
+				var result = (Task<bool?>)_windowManager.ShowDialogAsync(RouteViewModel, null, settings);
+				if (result.Result!=null&&result.Result.Value)
 
 				if (!RouteViewModel.Route.Any())
 				{
