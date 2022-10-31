@@ -502,7 +502,7 @@
       <Version>2.4.3</Version>
     </PackageReference>
     <PackageReference Include="Caliburn.Micro">
-      <Version>3.2.0</Version>
+      <Version>4.0.212</Version>
     </PackageReference>
     <PackageReference Include="Costura.Fody">
       <Version>4.1.0</Version>
